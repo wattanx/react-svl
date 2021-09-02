@@ -1,13 +1,13 @@
-# SVL
+# React-svl
 
-SVL is simple validation library for React.
+React-svl is simple validation library for React.
 
 ## Install
 
 To use svl, all you need to do is install the svl package and its peer dependencies.
 
 ```
-npm install svl react react-dom
+npm install react-svl react react-dom
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install svl react react-dom
 This is an example of using Chakra UI.
 
 ```tsx
-import { useForm } from 'svl';
+import { useForm } from 'react-svl';
 
 export const ValdiationExample = () => {
   // setting initialValues and validationRules

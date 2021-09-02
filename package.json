@@ -1,7 +1,7 @@
 {
-  "name": "svl",
+  "name": "react-svl",
   "version": "1.0.0",
-  "description": "SVL is simple validation library for React.",
+  "description": "react-svl is simple validation library for React.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wattanx/svl.git"
+    "url": "git+https://github.com/wattanx/react-svl.git"
   },
   "keywords": [
     "react",
@@ -35,9 +35,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wattanx/svl/issues"
+    "url": "https://github.com/wattanx/react-svl/issues"
   },
-  "homepage": "https://github.com/wattanx/svl#readme",
+  "homepage": "https://github.com/wattanx/react-svl#readme",
   "dependencies": {
     "@babel/runtime": "^7.14.6"
   },
