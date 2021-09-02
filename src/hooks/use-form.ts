@@ -26,12 +26,12 @@ export type ValidationErrorsType = {
   isInValid?: boolean;
 };
 
-export type UseForm<T> = {
+export type UseFormProps<T> = {
   validationRules: ValidationRule<T>;
   initialValues: T;
 };
 
-export function useForm<T extends { [key: string]: any }>({ initialValues, validationRules }: UseForm<T>) {
+export function useForm<T extends { [key: string]: any }>({ initialValues, validationRules }: UseFormProps<T>) {
   type ValidationErrors = Record<keyof T, ValidationErrorsType>;
 
   const initialErrors = Object.keys(initialValues).reduce((acc, field) => {
@@ -110,6 +110,14 @@ const validateFields = <T extends { [key: string]: any }>(
   errors: Record<keyof T, ValidationErrorsType>,
   field: string
 ) => {
+  if (!validationRules) {
+    return errors;
+  }
+
+  errors[field as keyof T] = {
+    isInValid: false,
+  };
+
   if (validateRequired(validationRules, values, field)) {
     errors[field as keyof T] = {
       isRequired: { message: `${field} is required.` },
@@ -119,14 +127,14 @@ const validateFields = <T extends { [key: string]: any }>(
   if (validateMax(validationRules, values, field)) {
     errors[field as keyof T] = {
       ...errors,
-      max: { message: `${field} must be less than ${validationRules[field].max}.` },
+      max: { message: `${field} must be less than or equal to ${validationRules[field].max}.` },
       isInValid: true,
     };
   }
   if (validateMin(validationRules, values, field)) {
     errors[field as keyof T] = {
       ...errors,
-      min: { message: `${field} must be greater than ${validationRules[field].min}.` },
+      min: { message: `${field} must be greater than or equal to ${validationRules[field].min}.` },
       isInValid: true,
     };
   }
@@ -134,7 +142,7 @@ const validateFields = <T extends { [key: string]: any }>(
   if (validateMaxLength(validationRules, values, field)) {
     errors[field as keyof T] = {
       ...errors,
-      maxLength: { message: `${field} must be less than ${validationRules[field].maxLength} characters.` },
+      maxLength: { message: `${field} must be less than or equal to ${validationRules[field].maxLength} characters.` },
       isInValid: true,
     };
   }
@@ -142,7 +150,7 @@ const validateFields = <T extends { [key: string]: any }>(
   if (validateMinLength(validationRules, values, field)) {
     errors[field as keyof T] = {
       ...errors,
-      minLength: { message: `${field} must be greater than ${validationRules[field].minLength} characters.` },
+      minLength: { message: `${field} must be ${validationRules[field].minLength} characters or more.` },
       isInValid: true,
     };
   }
@@ -158,12 +166,7 @@ const validateFields = <T extends { [key: string]: any }>(
 };
 
 const validateRequired = <T extends { [key: string]: any }>(validationRules: ValidationRule<T>, values: T, field: string) => {
-  return (
-    validationRules &&
-    validationRules[field].isRequired &&
-    typeof values[field] === 'string' &&
-    (values[field] as string).length <= 0
-  );
+  return validationRules[field].isRequired && typeof values[field] === 'string' && (values[field] as string).length <= 0;
 };
 
 const validateMax = <T extends { [key: string]: any }>(validationRules: ValidationRule<T>, values: T, field: string) => {
@@ -176,7 +179,6 @@ const validateMin = <T extends { [key: string]: any }>(validationRules: Validati
 
 const validateMaxLength = <T extends { [key: string]: any }>(validationRules: ValidationRule<T>, values: T, field: string) => {
   return (
-    validationRules &&
     validationRules[field].maxLength &&
     typeof values[field] === 'string' &&
     (values[field] as string).length > (validationRules[field].maxLength as number)
@@ -185,7 +187,6 @@ const validateMaxLength = <T extends { [key: string]: any }>(validationRules: Va
 
 const validateMinLength = <T extends { [key: string]: any }>(validationRules: ValidationRule<T>, values: T, field: string) => {
   return (
-    validationRules &&
     validationRules[field].minLength &&
     typeof values[field] === 'string' &&
     (values[field] as string).length < (validationRules[field].minLength as number)
@@ -193,9 +194,5 @@ const validateMinLength = <T extends { [key: string]: any }>(validationRules: Va
 };
 
 const validateCustomFunc = <T extends { [key: string]: any }>(validationRules: ValidationRule<T>, values: T, field: string) => {
-  return (
-    validationRules &&
-    validationRules[field].validate &&
-    (validationRules[field].validate as (value: T[keyof T]) => boolean)(values[field])
-  );
+  return validationRules[field].validate && (validationRules[field].validate as (value: T[keyof T]) => boolean)(values[field]);
 };
