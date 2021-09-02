@@ -1,5 +1,9 @@
 # React-svl
 
+![npm](https://img.shields.io/npm/v/react-svl)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-svl)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 React-svl is simple validation library for React.
 
 ## Install
