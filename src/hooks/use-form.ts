@@ -86,7 +86,7 @@ export function useForm<T extends { [key: string]: any }>({ initialValues, valid
 
   const onSubmit = (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => {
     event && event.preventDefault();
-    validate() && handleSubmit(values);
+    !validate() && handleSubmit(values);
   };
 
   return {

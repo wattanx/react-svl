@@ -215,6 +215,18 @@ describe('use-form Test', () => {
     expect(result.current.errors.age.max?.message).toBe('age must be less than or equal to 50.');
 
     act(() => {
+      result.current.resetErrors();
+    });
+
+    let submitResult: string = '';
+
+    act(() => {
+      result.current.onSubmit(() => (submitResult = 'called submit'))({ preventDefault: () => ({}) } as any);
+    });
+
+    expect(submitResult).toBe('');
+
+    act(() => {
       result.current.setFieldValue('firstName', 'test');
       result.current.setFieldValue('password', 'abcd');
       result.current.setFieldValue('age', '50');
@@ -227,5 +239,13 @@ describe('use-form Test', () => {
     expect(result.current.errors.password.maxLength?.message).toBe(undefined);
     expect(result.current.errors.age.max?.message).toBe(undefined);
     expect(result.current.errors.email.isInValid).toBe(false);
+
+    act(() => {
+      result.current.onSubmit(() => {
+        submitResult = 'called submit';
+      })({ preventDefault: () => ({}) } as any);
+    });
+
+    expect(submitResult).toBe('called submit');
   });
 });
