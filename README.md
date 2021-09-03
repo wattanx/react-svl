@@ -1,14 +1,14 @@
-# React-svl
+# react-svl
 
 ![npm](https://img.shields.io/npm/v/react-svl)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-svl)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-React-svl is simple validation library for React.
+react-svl is simple validation library for React.
 
 ## Install
 
-To use svl, all you need to do is install the svl package and its peer dependencies.
+To use react-svl, all you need to do is install the react-svl package and its peer dependencies.
 
 ```
 npm install react-svl react react-dom
