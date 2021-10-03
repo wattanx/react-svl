@@ -22,7 +22,8 @@
     "build": "concurrently npm:build:*",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "minor": "npm version minor"
   },
   "repository": {
     "type": "git",
@@ -66,13 +67,11 @@
     "framer-motion": "^4.1.17",
     "jest": "^27.0.6",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^27.0.2",
     "typescript": "4.3.2"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.2"
   }
 }

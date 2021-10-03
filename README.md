@@ -8,10 +8,16 @@ react-svl is simple validation library for React.
 
 ## Install
 
-To use react-svl, all you need to do is install the react-svl package and its peer dependencies.
+To use react-svl, all you need to do is install the react-svl package.
 
 ```
-npm install react-svl react react-dom
+npm install react-svl
+```
+
+or
+
+```
+yarn add react-svl
 ```
 
 ## Usage
