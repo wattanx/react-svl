@@ -1,6 +1,6 @@
 {
   "name": "react-svl",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "react-svl is simple validation library for React.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
