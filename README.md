@@ -67,3 +67,72 @@ export const ValdiationExample = () => {
   );
 };
 ```
+
+## API
+
+### useForm
+
+useForm is custom hook for validation.
+
+```ts
+const { errors, values, setFieldValue, validateField } = useForm({
+  initialValues: {
+    FirstName: '',
+    Password: '',
+  },
+  validationRules: {
+    FirstName: {
+      isRequired: true,
+    },
+    Password: {
+      minLength: 8,
+    },
+  },
+});
+```
+
+### Validation Rule
+
+The following items can be set as validation rules.
+
+| property   | type                           | description                               |
+| :--------- | :----------------------------- | :---------------------------------------- |
+| isRequired | boolean                        | Required or not                           |
+| max        | number                         | Maximum value                             |
+| min        | number                         | Minimum value                             |
+| maxLength  | number                         | Maximum text length                       |
+| minLength  | number                         | Minimum text length                       |
+| validate   | (value: T[keyof T]) => boolean | Custom rule(true: Error、false: no error) |
+
+### Change State
+
+You can use `setFieldValue` to change the State.
+
+```tsx
+<Input value={values.FirstName} onChange={(e) => setFieldValue('FirstName', e.currentTarget.value)} />
+```
+
+### Execute Validate
+
+Using `validateField` will execute the validation.
+
+```tsx
+<Input
+  value={values.FirstName}
+  onChange={(e) => setFieldValue('FirstName', e.currentTarget.value)}
+  onBlur={() => validateField('FirstName')}
+/>
+```
+
+### Default Error Message
+
+It also sets the default message for each validation rule, as shown below. (None in the case of custom rule)
+You can use `errors.property_name.rules.name.message`.
+
+| Rule       | Error Message                                                                       |
+| :--------- | :---------------------------------------------------------------------------------- |
+| isRequired | `{property name}` is required.                                                      |
+| max        | `{property name}` must be less than or equal to `{Maximum value}`.                  |
+| min        | `{property name}` must be greater than or equal to `{Minimum value}`.               |
+| maxLength  | `{property name}` must be less than or equal to `{Maximum text length}` characters. |
+| minLength  | `{property name}` must be `{Minimum text length}` characters or more.               |
