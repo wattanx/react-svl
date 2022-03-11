@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export type ValidationRule<T> = {
   readonly [P in keyof T]: BaseRule<T>;
@@ -49,14 +49,14 @@ export function useForm<T extends { [key: string]: any }>({ initialValues, valid
   const [errors, setErrors] = useState(initialErrors);
   const [values, setValues] = useState(initialValues);
 
-  const resetErrors = () => setErrors(initialErrors);
+  const resetErrors = useCallback(() => setErrors(initialErrors), [initialErrors]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setValues(initialValues);
     resetErrors();
-  };
+  }, [initialValues, resetErrors]);
 
-  const validate = () => {
+  const validate = useCallback(() => {
     const validationErrors = Object.keys(values).reduce((acc, field) => {
       return validateFields(validationRules, values, acc, field);
     }, {} as ValidationErrors);
@@ -65,29 +65,37 @@ export function useForm<T extends { [key: string]: any }>({ initialValues, valid
 
     setErrors(validationErrors);
     return isInValid;
-  };
+  }, [validationRules]);
 
-  const validateField = (field: keyof T) =>
-    setErrors((currentErrors) => {
-      const validationError = validateFields(validationRules, values, currentErrors, field as string);
-      return {
-        ...currentErrors,
-        [field]: validationError[field],
-      };
-    });
+  const validateField = useCallback(
+    (field: keyof T) =>
+      setErrors((currentErrors) => {
+        const validationError = validateFields(validationRules, values, currentErrors, field as string);
+        return {
+          ...currentErrors,
+          [field]: validationError[field],
+        };
+      }),
+    [validateFields, validationRules]
+  );
 
-  const setFieldError = (field: keyof T, error: ValidationErrorsType) =>
-    setErrors((currentErrors) => ({ ...currentErrors, [field]: error }));
+  const setFieldError = useCallback(
+    (field: keyof T, error: ValidationErrorsType) => setErrors((currentErrors) => ({ ...currentErrors, [field]: error })),
+    []
+  );
 
-  const setFieldValue = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
+  const setFieldValue = useCallback(<K extends keyof T, U extends T[K]>(field: K, value: U) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
     setFieldError(field, {});
-  };
+  }, []);
 
-  const onSubmit = (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => {
-    event && event.preventDefault();
-    !validate() && handleSubmit(values);
-  };
+  const onSubmit = useCallback(
+    (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => {
+      event && event.preventDefault();
+      !validate() && handleSubmit(values);
+    },
+    [validate]
+  );
 
   return {
     values,
