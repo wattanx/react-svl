@@ -1,12 +1,7 @@
-import { Meta } from '@storybook/react';
 import { Box } from '@chakra-ui/layout';
 import { Input } from '@chakra-ui/input';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
 import { useForm } from '../src';
-
-export default {
-  title: 'Example/FormValidation',
-} as Meta;
 
 export const ValdiationExample = () => {
   const { errors, values, setFieldValue, validateField } = useForm({
