@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "esnext",
+    "module": "esnext",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx"
   },
+  "exclude": ["src/__tests__"],
   "include": ["src/**/*.ts"]
 }
