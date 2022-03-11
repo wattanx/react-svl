@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useForm } from '../hooks';
+import { useForm } from '../use-form';
 
 describe('use-form Test', () => {
   it('Required Test', () => {
